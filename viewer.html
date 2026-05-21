@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 工具列 -->
+  <header class="toolbar">
+    <div class="toolbar-left">
+      <span class="logo">✨ Markdown Viewer</span>
+      <span class="filename" id="filename">未開啟檔案</span>
+    </div>
+    <div class="toolbar-right">
+      <button id="openFileBtn" class="btn" title="開啟檔案 (Ctrl+O)">
+        <span class="icon">📂</span>
+        <span class="btn-text">開啟</span>
+      </button>
+      <button id="saveCurrentBtn" class="btn btn-disabled" disabled title="儲存 (需使用「開啟」按鈕開啟檔案才能直接儲存)">
+        <span class="icon">💾</span>
+        <span class="btn-text">儲存</span>
+      </button>
+      <button id="saveFileBtn" class="btn" title="另存新檔 (Ctrl+Shift+S)">
+        <span class="icon">💾</span>
+        <span class="btn-text">另存</span>
+      </button>
+      <button id="loadImagesBtn" class="btn btn-disabled" disabled title="載入圖片 (需要授權資料夾)">
+        <span class="icon">🖼️</span>
+        <span class="btn-text">圖片</span>
+      </button>
+
+      <div class="toolbar-divider"></div>
+
+      <div class="view-toggle">
+        <button id="viewEdit" class="btn view-btn" title="僅編輯">
+          <span class="icon">✏️</span>
+        </button>
+        <button id="viewSplit" class="btn view-btn active" title="分割視圖">
+          <span class="icon">📖</span>
+        </button>
+        <button id="viewPreview" class="btn view-btn" title="僅預覽">
+          <span class="icon">👁️</span>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <button id="fullscreenBtn" class="btn" title="全螢幕 (F)">
+        <span class="icon" id="fullscreenIcon">⛶</span>
+      </button>
+      <button id="themeBtn" class="btn" title="切換主題">
+        <span class="icon" id="themeIcon">🌙</span>
+      </button>
+      <button id="clearDraftBtn" class="btn" title="清除草稿">
+        <span class="icon">🗑️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主要內容區 -->
+  <main class="container" id="container">
+    <!-- 拖放提示覆蓋層 -->
+    <div class="dropzone-overlay" id="dropzoneOverlay">
+      <div class="dropzone-content">
+        <span class="dropzone-icon">📄</span>
+        <p>拖放 .md 檔案到這裡</p>
+      </div>
+    </div>
+
+    <!-- 編輯區 -->
+    <section class="editor-panel" id="editorPanel">
+      <div class="panel-header">
+        <span>編輯器</span>
+      </div>
+      <textarea 
+        id="editor" 
+        class="editor" 
+        placeholder="在此輸入 Markdown 內容，或拖放 .md 檔案..."
+        spellcheck="false"
+      ></textarea>
+    </section>
+
+    <!-- 分隔線 -->
+    <div class="resizer" id="resizer"></div>
+
+    <!-- 預覽區 -->
+    <section class="preview-panel" id="previewPanel">
+      <div class="panel-header">
+        <span>預覽</span>
+      </div>
+      <div id="preview" class="preview markdown-body">
+        <div class="empty-state">
+          <span class="empty-icon">📝</span>
+          <p>開始輸入 Markdown 或拖放 .md 檔案</p>
+          <p class="hint">支援 GitHub Flavored Markdown</p>
+          <p class="hint">提示：若拖曳本機檔案到 Chrome 沒有自動套用，請到擴充功能「詳細資料」開啟「允許存取檔案網址」</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右側邊界拖曳調整 -->
+    <div class="resizer-right" id="resizerRight"></div>
+  </main>
+
+  <!-- 另存新檔對話框 -->
+  <div class="modal-overlay" id="saveModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>💾 另存新檔</h3>
+        <button class="modal-close" id="closeSaveModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label for="saveFilename">檔案名稱</label>
+        <input type="text" id="saveFilename" placeholder="my-document.md" value="document.md">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelSave">取消</button>
+        <button class="btn btn-primary" id="confirmSave">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 檔案選擇對話框 -->
+  <div class="modal-overlay" id="filePickerModal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3>📂 選擇檔案</h3>
+        <button class="modal-close" id="closeFilePickerModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="file-list" id="fileList">
+          <p class="file-list-hint">載入中...</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelFilePicker">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隱藏的檔案輸入 -->
+  <input type="file" id="fileInput" accept=".md,.markdown,.txt" hidden>
+
+  <!-- 載入函式庫 -->
+  <script src="lib/marked.min.js"></script>
+  <script src="lib/purify.min.js"></script>
+  <script src="lib/mermaid.min.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>

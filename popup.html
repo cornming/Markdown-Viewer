@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #24292f;
+    }
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      text-align: left;
+    }
+    p {
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      color: #57606a;
+      line-height: 1.5;
+    }
+    .btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #d0d7de;
+      background: #f6f8fa;
+      cursor: pointer;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .btn.primary {
+      background: #0366d6;
+      border-color: #0366d6;
+      color: #fff;
+    }
+    .btn.primary:hover { background: #0256b9; }
+    .btn:hover { background: #eaeef2; }
+    .section {
+      border-top: 1px solid #d0d7de;
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+    ol {
+      margin: 8px 0 12px 18px;
+      padding: 0;
+      font-size: 13px;
+      color: #24292f;
+    }
+    li { margin: 4px 0; }
+    code {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+    #status {
+      font-size: 12px;
+      color: #0366d6;
+      margin-top: 6px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <h3>📝 Markdown Viewer</h3>
+  <button id="openViewer" class="btn primary" type="button">📖 開啟編輯器</button>
+
+  <div class="section">
+    <p>若你把 <b>.md</b> 檔案拖進 Chrome 後沒有自動套用預覽，通常是因為尚未啟用 <b>允許存取檔案網址</b>。</p>
+    <p>快速檢查：</p>
+    <ol>
+      <li>打開 <code>chrome://extensions/</code></li>
+      <li>找到「Markdown Viewer」→ 點「詳細資料」</li>
+      <li>開啟「允許存取檔案網址」</li>
+    </ol>
+
+    <button id="openSettings" class="btn" type="button">⚙️ 開啟擴充功能設定頁</button>
+    <button id="copySteps" class="btn" type="button">📋 複製上述指引</button>
+    <div id="status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

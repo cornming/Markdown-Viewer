@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Markdown Viewer",
+  "version": "1.0.0",
+  "description": "拖放 .md 檔案即時預覽，支援編輯、深色主題、自動儲存草稿",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "file://*/*"
+  ],
+  "action": {
+    "default_title": "📝 Markdown Viewer"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*.md",
+        "file://*/*.markdown",
+        "file://*/*.txt"
+      ],
+      "js": [
+        "lib/marked.min.js",
+        "lib/purify.min.js",
+        "lib/mermaid.min.js",
+        "contentScript/inject_ui.js",
+        "viewer.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
