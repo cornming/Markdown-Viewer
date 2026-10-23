@@ -1,79 +1,74 @@
 # Markdown Viewer
 
-A Chrome extension (Manifest V3) that renders and edits Markdown files directly in your browser — drag-and-drop local `.md` files for instant preview, or open a dedicated editor tab.
+[English](README.en.md)
 
-<!-- screenshot -->
+Chrome 擴充功能（Manifest V3），直接在瀏覽器裡預覽和編輯 Markdown。把本機的 `.md` 檔拖進 Chrome 就能立刻看到排版結果，也可以開啟獨立的編輯分頁。
 
-## Features
+![Markdown Viewer 預覽畫面（局部截圖）](docs/screenshot.jpg)
 
-- **Drag & drop** `.md`, `.markdown`, `.txt` files for instant preview
-- **Split view** — editor + preview side by side, with draggable resizer
-- **Three view modes** — split, editor-only, preview-only
-- **Live rendering** powered by marked.js (GitHub Flavored Markdown)
-- **XSS protection** via DOMPurify
-- **Mermaid diagram** support
-- **Dark / Light theme** toggle with automatic preference memory
-- **Auto-save drafts** to Chrome storage
-- **Save / Save As** — overwrite original or download as new `.md` file
-- **Fullscreen mode**
-- **Open local files** via file picker
-- **Image loading** (requires folder access permission)
+## 功能
 
-## Installation
+- **拖放開檔**：把 `.md`、`.markdown`、`.txt` 檔拖進 Chrome 即可預覽
+- **分割檢視**：編輯器與預覽並排，中間的分隔線可以拖曳調整
+- **三種檢視模式**：分割、只看編輯器、只看預覽
+- **即時渲染**：使用 marked.js（支援 GitHub Flavored Markdown）
+- **XSS 防護**：使用 DOMPurify 過濾內容
+- **Mermaid 圖表**
+- **深色／淺色主題**，會記住你的選擇
+- **草稿自動儲存**（存在 Chrome 儲存空間）
+- **儲存／另存新檔**：可覆寫原檔，或下載成新的 `.md`
+- **全螢幕模式**
+- **用檔案選擇器開啟本機檔案**
+- **載入圖片**（需要授予資料夾存取權限）
 
-### From Chrome Web Store
+## 安裝
 
-<!-- Coming soon -->
+### 手動安裝（開發人員模式）
 
-### Manual Installation (Developer Mode)
-
-1. Clone this repository:
+1. 下載這個 repo：
    ```bash
    git clone https://github.com/cornming/Markdown-Viewer.git
    ```
-2. Open `chrome://extensions/` in Chrome
-3. Enable **Developer mode** (toggle in the top-right corner)
-4. Click **Load unpacked** and select the cloned project folder
+2. 在 Chrome 開啟 `chrome://extensions/`
+3. 開啟右上角的**開發人員模式**
+4. 按**載入未封裝項目**，選擇剛才下載的專案資料夾
 
-### Important: Enable File Access
+### 重要：開啟檔案存取權限
 
-To use the drag-and-drop feature with local files (`file://` URLs):
+要使用拖放本機檔案（`file://` 網址）的功能，需要：
 
-1. Go to `chrome://extensions/`
-2. Find **Markdown Viewer** and click **Details**
-3. Enable **Allow access to file URLs**
+1. 到 `chrome://extensions/`
+2. 找到 **Markdown Viewer**，按**詳細資料**
+3. 開啟**允許存取檔案網址**
 
-## Usage
+## 使用方式
 
-### Option 1: Drag & Drop
+### 方式一：拖放檔案
 
-Drag any local `.md` file into Chrome. The extension automatically intercepts `file://*.md` URLs and renders the Markdown with the full editor UI.
+把本機的 `.md` 檔拖進 Chrome。擴充功能會攔截 `file://*.md` 網址，並用完整的編輯介面顯示內容。
 
-### Option 2: Extension Popup
+### 方式二：點擴充功能圖示
 
-Click the Markdown Viewer extension icon in the toolbar to open a dedicated editor/preview tab.
+點瀏覽器工具列上的 Markdown Viewer 圖示，會開啟獨立的編輯／預覽分頁。
 
-## Keyboard Shortcuts
+## 快速鍵
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl + O` | Open file |
-| `Ctrl + S` | Save (overwrite) |
-| `Ctrl + Shift + S` | Save as new file |
-| `F` | Toggle fullscreen |
+| 快速鍵 | 功能 |
+|--------|------|
+| `Ctrl + O` | 開啟檔案 |
+| `Ctrl + S` | 儲存（覆寫） |
+| `Ctrl + Shift + S` | 另存新檔 |
+| `F` | 切換全螢幕 |
+| `Ctrl + +` / `Ctrl + -` / `Ctrl + 0` | 滑鼠停在 Mermaid 圖表上時，縮放圖表／還原 100% |
 
-## Tech Stack
+## 使用的技術
 
-- Chrome Extension Manifest V3
-- [marked.js](https://github.com/markedjs/marked) — Markdown parsing (GFM)
-- [DOMPurify](https://github.com/cure53/DOMPurify) — XSS sanitization
-- [mermaid.js](https://github.com/mermaid-js/mermaid) — Diagram rendering
-- Vanilla JavaScript / CSS (no frameworks)
+- Chrome 擴充功能 Manifest V3
+- [marked.js](https://github.com/markedjs/marked)：Markdown 解析（GFM）
+- [DOMPurify](https://github.com/cure53/DOMPurify)：XSS 過濾
+- [mermaid.js](https://github.com/mermaid-js/mermaid)：圖表渲染
+- 原生 JavaScript／CSS，沒有使用框架
 
-## License
+## 授權
 
-<!-- TODO -->
-
-## Contributing
-
-<!-- TODO -->
+目前尚未指定授權。
